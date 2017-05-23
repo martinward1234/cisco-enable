@@ -16,36 +16,31 @@ resp = ''
 
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh.connect('172.16.1.69', username='cisco', password='cisco')
+ssh.connect('172.16.1.69', username='python', password='python')
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+(print) ("SSH connection established, please wait for output...")
 chan = ssh.invoke_shell()
 
 # first we enable!
-chan.send('en\n')
-time.sleep(1)
-resp = chan.recv(9999)
-#print resp
+chan.send('enable\r')
+time.sleep(0.5)
+resp = chan.recv(1024)
+(print) (resp)
 
 # enablepassword!
-chan.send('cisco\n')
-time.sleep(1)
-resp = chan.recv(9999)
-#print resp
-
-# get into config mode
-# chan.send('conf t\n')
-# time.sleep(1)
-# resp = chan.recv(9999)
-#print resp
+chan.send('python\r')
+time.sleep(0.5)
+resp = chan.recv(1024)
+(print) (resp)
 
 # turn off paging
-chan.send('terminal pager 0\n')
-time.sleep(1)
-resp = chan.recv(9999)
-#print resp
-
-# Display how many users are connected to the IPSEC vpn
-chan.send('sh run\n')
-time.sleep(10)
-resp = chan.recv(655355)
+chan.send('terminal length 0\r')
+time.sleep(0.5)
+resp = chan.recv(1024)
 (print) (resp)
+
+# Issue the Show Run command to prove script function
+chan.send('sh run\n')
+time.sleep(7.5)
+resp = chan.recv(10240)
+(print) (resp.splitlines())
