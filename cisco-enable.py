@@ -17,30 +17,31 @@ resp = ''
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 ssh.connect('172.16.1.69', username='python', password='python')
-ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 (print) ("SSH connection established, please wait for output...")
 chan = ssh.invoke_shell()
 
 # first we enable!
-chan.send('enable\r\n')
+chan.send('enable\r')
 time.sleep(0.5)
 resp = chan.recv(1024)
 (print) (resp)
 
 # enablepassword!
-chan.send('python\r\n')
+chan.send('python\r')
 time.sleep(0.5)
 resp = chan.recv(1024)
 (print) (resp)
 
 # turn off paging
-chan.send('terminal length 0\r\n')
+chan.send('terminal length 0\r')
 time.sleep(0.5)
 resp = chan.recv(1024)
 (print) (resp)
 
 # Issue the Show Run command to prove script function
-chan.send('sh run\r\n')
+chan.send('sh run\r')
 time.sleep(7.5)
 resp = chan.recv(10240)
-(print) (resp.splitlines())
+(print) (resp,end='\r')
+
+ssh.close()

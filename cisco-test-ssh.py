@@ -19,8 +19,8 @@ if __name__ == '__main__':
 
     # VARIABLES THAT NEED CHANGED
     ip = '172.16.1.69'
-    username = 'cisco'
-    password = 'cisco'
+    username = 'python'
+    password = 'python'
 
     # Create instance of SSHClient object
     remote_conn_pre = paramiko.SSHClient()
@@ -52,6 +52,6 @@ if __name__ == '__main__':
 
     # Wait for the command to complete
     time.sleep(2)
-    
+
     output = remote_conn.recv(5000)
     (print) (output)
